@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Jobs - JobConnect</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/jobs.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg main-navbar sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-briefcase-fill text-primary"></i>
+        <span>Job<span class="text-dark">Connect</span></span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNavbarContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="jobs.html">Find Jobs</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center" id="nav-auth-section">
+          <!-- Populated by Auth.initNavbar() -->
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header Banner -->
+  <div class="bg-primary text-white py-4 mb-4">
+    <div class="container">
+      <h2 class="fw-bold mb-1">Explore Open Positions</h2>
+      <p class="mb-0 text-white-50">Discover opportunities across tech, engineering, cloud, and design.</p>
+    </div>
+  </div>
+
+  <div class="container pb-5">
+    <div class="row g-4">
+      <!-- Search & Filters Column -->
+      <div class="col-lg-4">
+        <div class="filter-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0"><i class="bi bi-funnel me-1"></i> Filter Jobs</h5>
+            <button class="btn btn-sm btn-link text-decoration-none p-0 text-muted" onclick="Jobs.resetFilters()">Reset All</button>
+          </div>
+
+          <form id="job-filter-form" onsubmit="handleFilterSubmit(event)">
+            <!-- Keyword -->
+            <div class="mb-3">
+              <label class="form-label filter-group-title">Keywords / Title</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+                <input type="text" id="filter-keyword" class="form-control" placeholder="Java, Developer, AWS...">
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="mb-3">
+              <label class="form-label filter-group-title">Location</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-geo-alt text-muted"></i></span>
+                <input type="text" id="filter-location" class="form-control" placeholder="Remote, San Francisco...">
+              </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="mb-3">
+              <label class="form-label filter-group-title">Required Skills</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-code-slash text-muted"></i></span>
+                <input type="text" id="filter-skills" class="form-control" placeholder="Spring Boot, MySQL...">
+              </div>
+            </div>
+
+            <!-- Job Type -->
+            <div class="mb-3">
+              <label class="form-label filter-group-title">Job Type</label>
+              <select id="filter-job-type" class="form-select">
+                <option value="ALL">All Job Types</option>
+                <option value="FULL_TIME">Full Time</option>
+                <option value="PART_TIME">Part Time</option>
+                <option value="REMOTE">Remote</option>
+                <option value="INTERNSHIP">Internship</option>
+                <option value="CONTRACT">Contract</option>
+              </select>
+            </div>
+
+            <!-- Experience -->
+            <div class="mb-4">
+              <label class="form-label filter-group-title">Experience Level</label>
+              <select id="filter-experience" class="form-select">
+                <option value="ALL">All Experience Levels</option>
+                <option value="Freshers">Freshers / 0-1 Year</option>
+                <option value="2-4">2-4 Years</option>
+                <option value="3-5">3-5 Years</option>
+                <option value="5+">5+ Years</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2">
+              <i class="bi bi-search me-1"></i> Apply Filters
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Jobs List Column -->
+      <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="fw-bold mb-0 text-muted" id="job-results-count">Searching jobs...</h5>
+        </div>
+
+        <div id="jobs-list-container">
+          <!-- Rendered by Jobs.loadJobs() -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container text-center small text-muted">
+      &copy; 2026 JobConnect Portal. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/applications.js"></script>
+  <script src="js/jobs.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check URL query parameters (e.g. from Hero search)
+      const params = new URLSearchParams(window.location.search);
+      const kw = params.get('keyword');
+      const loc = params.get('location');
+
+      if (kw) document.getElementById('filter-keyword').value = kw;
+      if (loc) document.getElementById('filter-location').value = loc;
+
+      Jobs.loadJobs({
+        keyword: kw,
+        location: loc
+      });
+    });
+
+    function handleFilterSubmit(e) {
+      e.preventDefault();
+      const filters = {
+        keyword: document.getElementById('filter-keyword').value.trim(),
+        location: document.getElementById('filter-location').value.trim(),
+        skills: document.getElementById('filter-skills').value.trim(),
+        jobType: document.getElementById('filter-job-type').value,
+        experience: document.getElementById('filter-experience').value
+      };
+      Jobs.loadJobs(filters);
+    }
+  </script>
+</body>
+</html>

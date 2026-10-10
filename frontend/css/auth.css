@@ -1,0 +1,124 @@
+/* ========================================================
+   JobConnect - Auth Stylesheet (auth.css)
+   ======================================================== */
+
+.auth-wrapper {
+  min-height: calc(100vh - 160px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.auth-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 480px;
+  overflow: hidden;
+}
+
+.auth-card-header {
+  text-align: center;
+  padding: 2.25rem 2rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.auth-card-body {
+  padding: 2rem;
+}
+
+.auth-card-footer {
+  padding: 1.25rem 2rem;
+  background-color: #f8fafc;
+  border-top: 1px solid #f1f5f9;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Role Selector Toggle in Register */
+.role-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.role-option {
+  position: relative;
+}
+
+.role-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.role-card-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+  text-align: center;
+}
+
+.role-card-label i {
+  font-size: 1.5rem;
+  margin-bottom: 0.35rem;
+  color: #64748b;
+}
+
+.role-card-label span {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.role-card-label small {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.role-option input[type="radio"]:checked + .role-card-label {
+  border-color: #2563eb;
+  background: #eff6ff;
+}
+
+.role-option input[type="radio"]:checked + .role-card-label i,
+.role-option input[type="radio"]:checked + .role-card-label span {
+  color: #2563eb;
+}
+
+/* Demo Credentials Helper Box */
+.demo-accounts-box {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 10px;
+  padding: 0.85rem;
+  margin-top: 1.25rem;
+  font-size: 0.825rem;
+}
+
+.demo-account-chip {
+  cursor: pointer;
+  background: #ffffff;
+  border: 1px solid #86efac;
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  display: inline-block;
+  margin-top: 0.35rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.demo-account-chip:hover {
+  background: #dcfce7;
+}
